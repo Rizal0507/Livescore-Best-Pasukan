@@ -25,7 +25,7 @@
     /* HEADER DESKTOP / PROYEKTOR */
     header {
       display: flex;
-      align-items: center;
+      align-items: center; /* Menjaga Keseimbangan Posisi Vertikal */
       justify-content: space-between;
       margin-bottom: 15px;
       border-bottom: 2px solid rgba(5, 244, 255, 0.4);
@@ -33,9 +33,10 @@
       box-shadow: 0 4px 15px rgba(5, 244, 255, 0.1);
     }
 
+    /* LOGO DIBESARKAN AGAR SEJAJAR DENGAN BATAS BAWAH JAM */
     .logo-container {
-      width: 95px;
-      height: 95px;
+      width: 130px;
+      height: 130px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -43,19 +44,23 @@
     }
 
     .logo-img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 0 6px rgba(5, 244, 255, 0.3));
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Menjaga Proporsi Logo */
+      filter: drop-shadow(0 0 8px rgba(5, 244, 255, 0.35));
     }
 
     .header-center {
       text-align: center;
       flex: 1;
       padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* GRADASI JUDUL DILEMBUTKAN (COLOR PALETTE SAMA) */
+    /* GRADASI JUDUL DILEMBUTKAN */
     header h1 {
       font-family: 'Teko', sans-serif;
       font-size: 3.3rem;
@@ -68,17 +73,17 @@
       text-shadow: 0 0 10px rgba(5, 244, 255, 0.2);
     }
 
-    /* PROMOSI DIBAWAH JUDUL (DIPERBESAR + EFEK BERPENDAR SESEKALI) */
+    /* PROMOSI DIBAWAH JUDUL (BERPENDAR SESEKALI) */
     .sub-credit-bar {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 14px;
       margin-top: 6px;
-      font-size: 0.88rem; /* Ukuran diperbesar */
+      font-size: 0.88rem;
       color: rgba(255, 255, 255, 0.6);
       letter-spacing: 0.5px;
-      animation: glow-pulse 4s infinite ease-in-out; /* Efek Pendar Sesekali */
+      animation: glow-pulse 4s infinite ease-in-out;
     }
 
     .sub-credit-bar strong {
@@ -95,7 +100,7 @@
       gap: 5px;
     }
 
-    /* ANIMASI BERPENDAR (GLOW PULSE) SESEKALI */
+    /* ANIMASI BERPENDAR (GLOW PULSE) */
     @keyframes glow-pulse {
       0%, 100% {
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
@@ -108,7 +113,7 @@
       }
     }
 
-    /* BARIS 2: GABUNGAN LIVE + JAM DIGITAL DALAM 1 TAMPILAN */
+    /* BARIS 2: GABUNGAN LIVE + JAM DIGITAL */
     .header-info-bar {
       display: flex;
       align-items: center;
@@ -166,7 +171,6 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
 
-    /* GRADASI JUDUL KATEGORI DILEMBUTKAN */
     .category-title {
       font-family: 'Teko', sans-serif;
       font-size: 2rem;
@@ -262,9 +266,9 @@
       flex: 1;
     }
 
-    /* NAMA SEKOLAH DIBERBESAR 1-2 POIN (1.1rem) */
+    /* NAMA SEKOLAH UKURAN DITINGKATKAN */
     .team-name {
-      font-size: 1.1rem; /* Naik dari 0.95rem */
+      font-size: 1.1rem;
       font-weight: 700;
       white-space: normal;
       word-break: break-word;
@@ -330,9 +334,10 @@
         padding-bottom: 8px;
       }
 
+      /* Logo disesuaikan di HP agar seimbang */
       .logo-container {
-        width: 50px;
-        height: 50px;
+        width: 75px;
+        height: 75px;
       }
 
       header h1 {
@@ -378,7 +383,7 @@
       }
 
       .team-name {
-        font-size: 1.0rem; /* Naik dari 0.88rem di HP */
+        font-size: 1.0rem;
       }
 
       .score-points {
@@ -399,11 +404,11 @@
     <div class="header-center">
       <h1>LIVE BEST PASUKAN LKBB LASKAR 9</h1>
       
-      <!-- BARIS 1: PROMOSI (DIPERBESAR & EFEK GLOWING) -->
+      <!-- BARIS 1: PROMOSI -->
       <div class="sub-credit-bar">
         <span class="sub-credit-item">dibuat oleh <strong>Rekap Andalan</strong></span>
         <span class="divider">|</span>
-        <span class="sub-credit-item"><i class="fab fa-instagram"></i> tjobrut.store | cosmo.atribut</span>
+        <span class="sub-credit-item"><i class="fab fa-instagram"></i> tjobrut.store | cosmoatribut</span>
         <span class="divider">|</span>
         <span class="sub-credit-item"><i class="fab fa-whatsapp"></i> 0896-9402-4600</span>
       </div>
