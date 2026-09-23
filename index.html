@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LIVE SCORE PASUKAN LASKAR 9</title>
+  <title>LIVE SCORE BEST PASUKAN LASKAR 9</title>
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome untuk Icon IG & WA -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -15,7 +18,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 15px 20px;
+      padding: 15px 20px 5px 20px;
       overflow-x: hidden;
     }
 
@@ -36,6 +39,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .logo-img {
@@ -48,6 +52,7 @@
     .header-center {
       text-align: center;
       flex: 1;
+      padding: 0 10px;
     }
 
     header h1 {
@@ -195,7 +200,8 @@
       background: #222936;
       font-size: 1.1rem;
       font-weight: bold;
-      margin-right: 12px;
+      margin-right: 10px;
+      flex-shrink: 0;
     }
 
     .rank-1 .rank-badge { background: #FFDB05; color: #000; font-size: 1.3rem; }
@@ -207,22 +213,29 @@
       align-items: center;
       gap: 6px;
       overflow: hidden;
+      flex: 1;
     }
 
+    /* MENGATUR NAMA SEKOLAH PANJANG MENJADI SEIMBANG MAX 2 BARIS */
     .team-name {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     /* INDIKATOR SEGITIGA BERKEDIP (BLINKING) */
     .trend-icon {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: bold;
       margin-left: 4px;
       display: inline-block;
+      flex-shrink: 0;
       animation: blink 1s infinite ease-in-out;
     }
 
@@ -247,6 +260,7 @@
       color: #05F4FF;
       margin-left: 10px;
       text-shadow: 0 0 8px rgba(5, 244, 255, 0.5);
+      flex-shrink: 0;
     }
 
     .loading-text {
@@ -256,33 +270,75 @@
       font-size: 1rem;
     }
 
+    /* FOOTER REKAP ANDALAN (LAPTOP/DESKTOP: SAMAR & KECIL) */
+    .live-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 15px;
+      margin-top: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.4); /* Warna samar di laptop */
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+    }
+
+    .live-footer strong {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .footer-contacts {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     /* RESPONSIF KHUSUS HP (TAMPILAN MOBILE) */
     @media (max-width: 900px) {
       body {
         padding: 10px;
       }
 
+      /* Logo Tetap Berjajar Kiri & Kanan di HP */
       header {
-        flex-direction: column;
-        gap: 10px;
-        padding-bottom: 12px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 10px;
       }
 
       .logo-container {
-        width: 65px;
-        height: 65px;
+        width: 50px;
+        height: 50px;
       }
 
       header h1 {
-        font-size: 2.2rem;
+        font-size: 1.4rem;
+        letter-spacing: 1px;
       }
 
       .header-info-bar {
-        gap: 10px;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .status-badge {
+        font-size: 0.75rem;
+        padding: 1px 7px;
       }
 
       .clock-display {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        padding: 0 8px;
       }
 
       /* Ubah grid 3 kolom menjadi 1 kolom vertikal ke bawah */
@@ -300,11 +356,30 @@
       }
 
       .team-name {
-        font-size: 0.98rem;
+        font-size: 0.88rem;
       }
 
       .score-points {
         font-size: 1.6rem;
+      }
+
+      /* FOOTER DI HP (LEBIH JELAS & TERBACA) */
+      .live-footer {
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px 10px;
+        color: rgba(255, 255, 255, 0.85); /* Warna lebih terang di HP */
+        font-size: 0.85rem;
+        text-align: center;
+      }
+
+      .live-footer strong {
+        color: #ffffff;
+      }
+
+      .footer-contacts {
+        flex-direction: column;
+        gap: 4px;
       }
     }
   </style>
@@ -355,6 +430,21 @@
     </div>
   </div>
 
+  <!-- FOOTER REKAP ANDALAN -->
+  <footer class="live-footer">
+    <div class="footer-credit">
+      dibuat oleh <strong>Rekap Andalan</strong>
+    </div>
+    <div class="footer-contacts">
+      <span class="contact-item">
+        <i class="fab fa-instagram"></i> tjobrut.store | cosmo.atribut
+      </span>
+      <span class="contact-item">
+        <i class="fab fa-whatsapp"></i> 0896-9402-4600
+      </span>
+    </div>
+  </footer>
+
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxxvkMipIor8MDUFZlex8V6tCGjGn450M4yWF0zqB4HNP5bw0EbTe0X_Bjl6vre42zm/exec";
 
@@ -395,7 +485,6 @@
           } else if (currentRank > oldRank) {
             activeTrends[catKey][teamName] = 'down'; // Turun peringkat
           }
-          // Jika peringkat tidak berubah, tren sebelumnya TETAP DIPERTAHANKAN
         }
 
         // Tampilkan hanya simbol segitiga berkedip
