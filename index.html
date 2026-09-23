@@ -6,14 +6,6 @@
   <title>LIVE SCORE PASUKAN LASKAR 9</title>
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* PALET WARNA PILIHAN:
-       #FF05A7 (Neon Magenta/Pink)
-       #05F4FF (Neon Cyan)
-       #FFDB05 (Neon Gold/Yellow)
-       #AA3C84 (Purple)
-       #427D80 (Dark Teal)
-    */
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
@@ -27,7 +19,6 @@
       overflow-x: hidden;
     }
 
-    /* HEADER LAYOUT */
     header {
       display: flex;
       align-items: center;
@@ -106,7 +97,6 @@
       100% { opacity: 1; }
     }
 
-    /* GRID & CARDS */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -136,7 +126,6 @@
       font-weight: bold;
     }
 
-    /* TEMA WARNA JUDUL KATEGORI */
     .purna-title { 
       background: linear-gradient(135deg, #FF05A7 0%, #AA3C84 100%); 
       color: #ffffff; 
@@ -173,7 +162,6 @@
       transition: all 0.4s ease;
     }
 
-    /* TOP 3 STYLING DENGAN MEDALI */
     .rank-1 { 
       border-left-color: #FFDB05; 
       background: rgba(255, 219, 5, 0.12); 
@@ -227,7 +215,6 @@
       text-overflow: ellipsis;
     }
 
-    /* INDIKATOR TREN NAIK / TURUN */
     .trend-icon {
       font-size: 0.9rem;
       font-weight: bold;
@@ -235,7 +222,6 @@
       align-items: center;
       padding: 1px 5px;
       border-radius: 4px;
-      animation: popIn 0.5s ease;
     }
 
     .trend-up {
@@ -250,18 +236,19 @@
       border: 1px solid #FF0055;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0); }
-      80% { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
-
     .score-points {
       font-family: 'Teko', sans-serif;
       font-size: 2rem;
       color: #05F4FF;
       margin-left: 10px;
       text-shadow: 0 0 8px rgba(5, 244, 255, 0.5);
+    }
+
+    .loading-text {
+      text-align: center;
+      color: #427D80;
+      padding: 20px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -291,32 +278,32 @@
   <div class="grid-container">
     <div class="category-card">
       <div class="category-title purna-title">PURNA / MANAGEMENT</div>
-      <div class="score-list" id="list-purna"></div>
+      <div class="score-list" id="list-purna">
+        <div class="loading-text">Memuat data...</div>
+      </div>
     </div>
 
     <div class="category-card">
       <div class="category-title smp-title">SMP / MTS</div>
-      <div class="score-list" id="list-smp"></div>
+      <div class="score-list" id="list-smp">
+        <div class="loading-text">Memuat data...</div>
+      </div>
     </div>
 
     <div class="category-card">
       <div class="category-title sma-title">SMA / SMK / MA</div>
-      <div class="score-list" id="list-sma"></div>
+      <div class="score-list" id="list-sma">
+        <div class="loading-text">Memuat data...</div>
+      </div>
     </div>
   </div>
 
   <script>
-    // URL API GOOGLE APPS SCRIPT ANDA
-    const API_URL = "https://script.google.com/macros/s/AKfycbw1dAZmjaXDqCXOPGxXA1-hqwe-1-SOiPGPbT_KyVbBGKxa9iNIP8c4UBKqxNjsZc_i/exec";
+    // URL API APPS SCRIPT ANDA
+    const API_URL = "https://script.google.com/macros/s/AKfycbxxvkMipIor8MDUFZlex8V6tCGjGn450M4yWF0zqB4HNP5bw0EbTe0X_Bjl6vre42zm/exec";
 
-    // Variabel untuk menyimpan histori peringkat sebelumnya (untuk fitur Naik/Turun)
-    let previousRanks = {
-      purna: {},
-      smp: {},
-      sma: {}
-    };
+    let previousRanks = { purna: {}, smp: {}, sma: {} };
 
-    // 1. FUNGSI JAM REALTIME
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -327,11 +314,10 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. FUNGSI RENDER TAMPILAN KATEGORI
     function renderCategory(catKey, containerId, items) {
       const container = document.getElementById(containerId);
       if (!items || items.length === 0) {
-        container.innerHTML = '<div style="text-align: center; color: #427D80; padding: 20px;">Belum Ada Data</div>';
+        container.innerHTML = '<div class="loading-text">Belum Ada Data</div>';
         return;
       }
 
@@ -343,32 +329,21 @@
         const teamName = item.nama;
         newRankState[teamName] = currentRank;
 
-        // Logika Indikator Naik / Turun
         let trendHtml = '';
         if (previousRanks[catKey] && previousRanks[catKey][teamName] !== undefined) {
           const oldRank = previousRanks[catKey][teamName];
           if (currentRank < oldRank) {
-            // Peringkat membaik (Angka peringkat lebih kecil) -> NAIK
             trendHtml = `<span class="trend-icon trend-up">▲ Naik</span>`;
           } else if (currentRank > oldRank) {
-            // Peringkat memburuk (Angka peringkat lebih besar) -> TURUN
             trendHtml = `<span class="trend-icon trend-down">▼ Turun</span>`;
           }
         }
 
-        // Logika Medali untuk Juara 1, 2, 3
         let rankBadgeContent = currentRank;
         let rankClass = '';
-        if (currentRank === 1) {
-          rankBadgeContent = '🥇';
-          rankClass = 'rank-1';
-        } else if (currentRank === 2) {
-          rankBadgeContent = '🥈';
-          rankClass = 'rank-2';
-        } else if (currentRank === 3) {
-          rankBadgeContent = '🥉';
-          rankClass = 'rank-3';
-        }
+        if (currentRank === 1) { rankBadgeContent = '🥇'; rankClass = 'rank-1'; }
+        else if (currentRank === 2) { rankBadgeContent = '🥈'; rankClass = 'rank-2'; }
+        else if (currentRank === 3) { rankBadgeContent = '🥉'; rankClass = 'rank-3'; }
 
         html += `
           <div class="score-item ${rankClass}">
@@ -384,15 +359,14 @@
         `;
       });
 
-      // Simpan posisi peringkat saat ini untuk pembandingan berikutnya
       previousRanks[catKey] = newRankState;
       container.innerHTML = html;
     }
 
-    // 3. FUNGSI FETCH DATA REALTIME
     async function updateDashboard() {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Gagal mengambil data");
         const data = await response.json();
         
         if (data) {
@@ -406,7 +380,7 @@
     }
 
     updateDashboard();
-    setInterval(updateDashboard, 2000); // Tarik data baru tiap 2 detik
+    setInterval(updateDashboard, 2000);
   </script>
 
 </body>
